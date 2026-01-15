@@ -1,26 +1,20 @@
 from pymongo import MongoClient
 
-client = MongoClient("mongodb+srv://meirg:HxDGLWDvLaLvgJBV@cluster0.a8kyzcd.mongodb.net/")
-db = client["threats"]
-collection = db["top_threats"]
 
-# cursor = collection.find({"Quantity": {"$gt": 40}})
-# print("The data having Quantity greater than 40 is:")
-# for doc in cursor:
-#     print(doc)
-
-# cursor = collection.find({"Quantity": {"$lt": 40}})
-# print("\nThe data having Quantity less than 40 is:")
-# for doc in cursor:
-#     print(doc)
+class DBConnection:
+    @staticmethod
+    def get_connection():
+        client = MongoClient("mongodb+srv://meirg:HxDGLWDvLaLvgJBV@cluster0.a8kyzcd.mongodb.net/")
+        db = client["threats"]
+        collection = db["top_threats"]
+        return collection
 
 
+class DBCrud:
+    _collection = DBConnection.get_connection()
 
-data = {
-"name": "Alpha",
-"location": "Metropolis",
-"danger_rate": 10
-}
+    @staticmethod
+    def insert_data(top: list[dict]):
+        DBCrud._collection.insert_many(top)
+        print("Data inserted.")
 
-collection.insert_one(data)
-print("Data inserted.")
