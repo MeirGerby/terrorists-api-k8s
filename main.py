@@ -13,7 +13,7 @@ async def create_upload_file(file: UploadFile = File(...)):
         return {"detail": "No file provided"}
     if file.filename and not file.filename.endswith("csv"):
         return {"detail": "Invalid CSV file"}
-    top_terorist = CsvFile(f'{file.filename}').top_terorist().to_dict(orient="dict")
+    top_terorist = CsvFile(f'{file.filename}').top_terorist().to_dict(orient="tight")
     
     return { 
         "count":len(top_terorist),
